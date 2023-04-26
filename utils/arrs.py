@@ -31,7 +31,7 @@ def my_slice(coll, start=0, end=None):
     """
     length = len (coll)
 
-    if length == 0 :
+    if length <= 0 :
         return []
 
     normalized_end = end
@@ -41,20 +41,29 @@ def my_slice(coll, start=0, end=None):
     elif end < 0 :
         if end < -length :
             return []
+        if end <= start:
+            return []
         normalized_end += length
-    elif end < start :
+    elif end <= start:
         return []
+
 
     normalized_start = start
 
     if start < 0 :
         normalized_start += length
+        if end is None:
+            return "Ошибка, необходимо задать числовое значение для end"
         if start < end :
-            normalized_end = length
+            normalized_end += length
         if start < -length :
             normalized_start = 0
+
+
+
+
 
     return coll[normalized_start :normalized_end]
 
 
-print (my_slice ([1, 2, 3, 4], 0, -2))
+print (my_slice ([1,2,3], -2, -1))
