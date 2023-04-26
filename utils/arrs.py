@@ -29,9 +29,9 @@ def my_slice(coll, start=0, end=None):
     Если индекс отрицательный, end указывает смещение от конца списка. По умолчанию равен длине исходного списка.
     :return: массив элементов
     """
-    length = len(coll)
+    length = len (coll)
 
-    if length == 0:
+    if length == 0 :
         return []
 
     normalized_end = end
@@ -39,14 +39,22 @@ def my_slice(coll, start=0, end=None):
     if end is None :
         normalized_end = length
     elif end < 0 :
+        if end < -length :
+            return []
         normalized_end += length
+    elif end < start :
+        return []
 
     normalized_start = start
 
-    if normalized_start < 0:
-        if normalized_start < -length:
+    if start < 0 :
+        normalized_start += length
+        if start < end :
+            normalized_end = length
+        if start < -length :
             normalized_start = 0
-        else:
-            normalized_start += length
 
-    return coll[normalized_start:normalized_end]
+    return coll[normalized_start :normalized_end]
+
+
+print (my_slice ([1, 2, 3, 4], 0, -2))
